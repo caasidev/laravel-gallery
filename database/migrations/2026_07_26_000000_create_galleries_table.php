@@ -31,7 +31,7 @@ return new class extends Migration
             $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
 
-            $table->index('sort_order');
+            $table->index(['gallery_id', 'sort_order']);
         });
     }
 
