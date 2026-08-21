@@ -31,8 +31,8 @@ class GalleryController extends Controller
         if ($request->validatedSearch() !== null) {
             $search = str_replace(['%', '_'], ['\%', '\_'], $request->validatedSearch());
             $query->where(function ($q) use ($search): void {
-                $q->whereRaw('name like ?', ["%$search%"])
-                    ->orWhereRaw('description like ?', ["%$search%"]);
+                $q->whereRaw("name like ? escape '\\'", ["%$search%"])
+                    ->orWhereRaw("description like ? escape '\\'", ["%$search%"]);
             });
         }
 
@@ -124,7 +124,7 @@ class GalleryController extends Controller
         return $path;
     }
 
-    private function generateUniqueSlug(string $slug, int $userId, ?int $excludeId = null): string
+    private function generateUniqueSlug(string $slug, int|string $userId, ?int $excludeId = null): string
     {
         $baseSlug = $slug;
         $suffix = 1;
