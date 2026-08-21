@@ -48,6 +48,8 @@ class GalleryController extends Controller
         $data = $request->validated();
         $user = $request->user();
 
+        abort_unless($user !== null, 403);
+
         $slug = $data['slug'] ?? $this->generateUniqueSlug(Str::slug($data['name']), $user->getAuthIdentifier());
 
         $gallery = Gallery::create([
